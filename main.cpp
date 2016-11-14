@@ -41,21 +41,35 @@ struct edge {
 
 typedef vector<node*> Graph;
 
+void loadGraph(Graph &g, int &n_nodes, int &n_edges);
+void printGraph(Graph &g);
 /*
  * 
  */
 int main(int argc, char** argv) {
 
+	/*
+	 *  initializing variables: number of nodes and edges.
+	 *  opening ifstream
+	 */
 	int n_nodes = 0;
 	int n_edges = 0;
+	Graph g;
+	loadGraph(g, n_nodes, n_edges);
+	
+	printGraph(g);
+	return 0;
+}
+
+void loadGraph(Graph &g, int &n_nodes, int &n_edges) {
 	ifstream in("./dataset/input/input0.txt");
 	
+	// reading first line of file containing the values of n_nodes and edges
 	in >> n_nodes;
 	cout << "N. nodes: " << n_nodes << endl;
 	in >> n_edges;
 	cout << "N. edges " << n_edges << endl;
 	
-	vector<node*> g;
 	g.resize(n_nodes);
 	
 	for(int i = 0; i<n_edges; i++) {
@@ -83,7 +97,9 @@ int main(int argc, char** argv) {
 	}
 	
 	in.close();
-	
+}
+
+void printGraph(Graph &g) {
 	for(int i =0; i<g.size();i++) {
 		cout << "Node: " << g[i]->name << "." << endl;
 		cout << "Neighbours: ";
@@ -92,7 +108,4 @@ int main(int argc, char** argv) {
 		}
 		cout << endl;
 	}
-	
-	return 0;
 }
-
