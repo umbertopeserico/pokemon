@@ -23,7 +23,7 @@ struct edge;
 // Data structure definition
 struct node {
 	int name = -1;
-	vector<edge*> neighbours;
+	vector<edge*> adj;
 	bool visited;
 	
 	node(int name);
@@ -40,9 +40,12 @@ struct edge {
 };
 
 typedef vector<node*> Graph;
+typedef vector<node*> Cycle;
+typedef vector<Cycle*> Cicles;
 
 void loadGraph(Graph &g, int &n_nodes, int &n_edges);
 void printGraph(Graph &g);
+
 /*
  * 
  */
@@ -88,12 +91,12 @@ void loadGraph(Graph &g, int &n_nodes, int &n_edges) {
 		e->from = g[from];
 		e->to = g[to];
 		
-		g[from]->neighbours.push_back(e);
+		g[from]->adj.push_back(e);
 		
 		e = new edge;
 		e->from = g[to];
 		e->to = g[from];
-		g[to]->neighbours.push_back(e);
+		g[to]->adj.push_back(e);
 	}
 	
 	in.close();
@@ -101,10 +104,10 @@ void loadGraph(Graph &g, int &n_nodes, int &n_edges) {
 
 void printGraph(Graph &g) {
 	for(int i =0; i<g.size();i++) {
-		cout << "Node: " << g[i]->name << "." << endl;
-		cout << "Neighbours: ";
-		for(int j=0; j<g[i]->neighbours.size(); j++) {
-			cout << g[i]->neighbours[j]->to->name << " ";
+		cout << "Node: " << g[i]->name << endl;
+		cout << "\tNeighbours: ";
+		for(int j=0; j<g[i]->adj.size(); j++) {
+			cout << g[i]->adj[j]->to->name << " ";
 		}
 		cout << endl;
 	}
